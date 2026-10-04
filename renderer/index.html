@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>BalanceBite</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+
+
+<body>
+<!-- Profile set-up / edit -->
+<section id="setup" class="screen" hidden>
+  <button id="back" class="icon-btn back" type="button" aria-label="Back" hidden>
+    <svg viewBox="0 0 24 24" width="26" height="26"><path d="M20 12H5m6-6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <form id="profile-form" novalidate>
+    <label class="avatar-pick" title="Upload a profile picture">
+      <input class="sr-only" type="file" id="photo" accept="image/*">
+      <img id="avatar-preview" alt="Profile picture">
+      <span class="avatar-badge">Change photo</span>
+    </label>
+    <label class="field">Name <input id="f-name" maxlength="40" autocomplete="off"></label>
+    <label class="field">Health issue <input id="f-health" maxlength="200" autocomplete="off"></label>
+    <label class="field">Restrictions <input id="f-restrict" maxlength="400" autocomplete="off"></label>
+    <label class="field">Allergies <input id="f-allergy" maxlength="400" autocomplete="off"></label>
+    <p id="form-error" role="alert"></p>
+    <button class="primary" type="submit">Save profile</button>
+    <p class="privacy">Saved on this device only. Nothing is sent anywhere.</p>
+  </form>
+</section>
+
+<!-- Chat -->
+<section id="chat" class="screen" hidden>
+  <header>
+    <button id="open-profile" class="avatar-btn" type="button" aria-label="Edit profile"><img id="avatar-small" alt=""></button>
+    <h1 id="app-title">BalanceBite</h1>
+    <button id="new-chat" class="icon-btn" type="button" aria-label="Start over" title="Start over">
+      <svg viewBox="0 0 24 24" width="24" height="24"><path d="M20 12a8 8 0 1 1-2.5-5.8M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </header>
+
+  <div id="modes">
+    <button type="button" class="chip on" data-mode="meal">Plan meals</button>
+    <button type="button" class="chip" data-mode="check">Check a new food</button>
+  </div>
+
+  <div id="log" aria-live="polite"></div>
+
+  <div id="quick"></div>
+  <form id="composer" autocomplete="off">
+    <input id="msg" maxlength="600" placeholder="Enter your response..." aria-label="Your response">
+    <button id="send" class="send" type="submit" aria-label="Send">
+      <svg viewBox="0 0 48 48" width="46" height="46"><path d="M24 4 6 24h11v18h14V24h11z" fill="currentColor"/></svg>
+    </button>
+  </form>
+</section>
+
+<div id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>

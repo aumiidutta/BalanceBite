@@ -1,0 +1,66 @@
+{
+  "name": "balance-bite",
+  "version": "1.0.0",
+  "description": "Offline meal ideas for people managing a health condition, powered by an open-weight model (Gemma/Llama).",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win dir",
+    "dist:installer": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "node-llama-cpp": "^3.6.0"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.balancebite.app",
+    "productName": "BalanceBite",
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/node-llama-cpp/**",
+      "node_modules/@node-llama-cpp/**"
+    ],
+    "files": [
+      "main.js",
+      "preload.js",
+      "llm.js",
+      "renderer/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "models",
+        "to": "models",
+        "filter": [
+          "model.gguf"
+        ]
+      }
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": true
+    }
+  },
+  "allowScripts": {
+    "electron-winstaller@5.4.0": true,
+    "node-llama-cpp@3.22.1": true
+  }
+}
