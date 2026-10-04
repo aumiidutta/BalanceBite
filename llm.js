@@ -1,8 +1,4 @@
 'use strict';
-/**
- * Local AI engine. Runs a GGUF model (Gemma / Llama / any open-weight chat model)
- * fully on this PC through node-llama-cpp. No network, no server.
- */
 const fs = require('fs');
 
 let llama = null, model = null, context = null, loading = null;
@@ -53,7 +49,7 @@ const CHECK_SCHEMA = {
   required: ['verdict', 'reason', 'portion', 'after_effects', 'tip'],
 };
 
-/* ---------- prompts: the saved profile is injected into EVERY request ---------- */
+/* ---------- the saved profile is injected into EVERY request ---------- */
 function systemPrompt(p) {
   return [
     'You are a careful, friendly kitchen assistant that runs fully offline.',
@@ -62,7 +58,6 @@ function systemPrompt(p) {
     `Dietary restrictions: ${p.restrictions || 'none'}.`,
     `Allergies: ${p.allergies || 'none'}. Never use these ingredients or anything derived from them.`,
     'Tailor every answer to the health issue and restrictions above.',
-    'For blood-sugar related conditions: prefer low glycaemic index foods, high fibre, lean protein and healthy fats; pair carbohydrates with protein or fibre; avoid added sugar and refined flour; give portions in household measures (tbsp, cup, palm-sized).',
     'Keep every step short (maximum 10 steps per recipe). Be concrete and honest about after-effects. You are not a doctor.',
     'Reply with JSON only, matching the requested format.',
   ].join('\n');
@@ -116,7 +111,7 @@ async function load(modelFile, onStatus) {
 async function ask(system, user, schema) {
   const { LlamaChatSession } = await import('node-llama-cpp');
   const grammar = await llama.createGrammarForJsonSchema(schema);
-  // Fresh session per request => no chat history is kept inside the model either.
+  // Fresh session per request => no chat history is kept
   const session = new LlamaChatSession({ contextSequence: context.getSequence(), systemPrompt: system });
   try {
     const text = await session.prompt(user, { grammar, maxTokens: 1800, temperature: 0.5 });

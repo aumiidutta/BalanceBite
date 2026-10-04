@@ -14,7 +14,7 @@ const modelFile = () =>
 
 const clean = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 
-/* ---------- profile: stored on this PC only, encrypted with the Windows account ---------- */
+/* ---------- stored locally, encrypted with the Windows account ---------- */
 function sanitizeProfile(p) {
   const out = {
     name: clean(p && p.name, 40),

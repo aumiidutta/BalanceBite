@@ -172,7 +172,7 @@
     } finally { setBusy(false); $('#msg').focus(); }
   }
 
-  /* ---------------- result: one neutral model -> card, clipboard text, .doc ---------------- */
+  /* ---------------- result: card, clipboard text, .doc ---------------- */
   function buildModel(mode, d) {
     const m = [];
     if (mode === 'meal') {
